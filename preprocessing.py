@@ -16,7 +16,8 @@ import pickle
 import lda
 from nltk.stem.porter import PorterStemmer
 
-dataframe = pd.read_pickle('presidential_speeches.pickle')
+df1 = pd.read_pickle('presidential_speeches.pickle')
+df2 = pd.read_pickle('presidential_speeches2.pickle')
 
 def get_words(text):
     p_stemmer = PorterStemmer()

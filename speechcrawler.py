@@ -61,11 +61,9 @@ def get_transcript(speech_link):
     ''' scrape title of speech, date of speech and full transcipt contained in the input speech_link URL '''
     
     #new_link = base_url + str(speech_link)
-    
-    response = requests.get(speech_link)
-    soup = bs4.BeautifulSoup(response.content, "html5lib")
-
     try:
+        response = requests.get(speech_link)
+        soup = bs4.BeautifulSoup(response.content, "html5lib")
         title = soup.find("title").text
         speech_date = title.split('(', 1)[1].split(')')[0]
         transcript = soup.find('div', {'id': 'transcript'}).text
@@ -78,21 +76,25 @@ def get_transcript(speech_link):
     except:
         pass
 
-queue_children_sites(starting_url, queue)
-transcript_dict = {}
-i=0
-size = queue.qsize()
-while queue.qsize() > 0:
-    if i % 100 == 0:
-        print ('Scraped ' + str(i) + '/' + str(size) + ' of links...')
-    link = queue.get()
-    transcript_data = get_transcript(link)
-    if transcript_data is not None:
-        key = transcript_data['speaker'] + '|' + transcript_data['date']
-        transcript_dict[key] = transcript_data
-    i+=1
-    print(queue.qsize())
 
-df = pd.DataFrame.from_dict(transcript_dict, orient='index')
-pickle.dump(df, open( "presidential_speeches.pickle", "wb" ))
 
+def crawl(queue=None):
+    if queue is None:
+        queue_children_sites(starting_url, queue)
+    transcript_dict = {}
+    i=0
+    size = queue.qsize()
+    while queue.qsize() > 0:
+        if i % 100 == 0:
+            print ('Scraped ' + str(i) + '/' + str(size) + ' of links...')
+        link = queue.get()
+        transcript_data = get_transcript(link)
+        if transcript_data is not None:
+            key = transcript_data['speaker'] + '|' + transcript_data['date']
+            transcript_dict[key] = transcript_data
+        i+=1
+        print("queue size is " +  str(queue.qsize()))
+        print("dict size is " + str(len(transcript_dict)))
+
+    df = pd.DataFrame.from_dict(transcript_dict, orient='index')
+    pickle.dump(df, open( "presidential_speeches2.pickle", "wb" ))
