@@ -1,8 +1,6 @@
-# CS122: Course Search Engine Part 1
-# THE CRAWLER -- Python file contains functions for crawling through the now defunct UChicago course catalog
-# and collecting class titles, departments, course numbers, descriptions, professors, etc.
-# and generating csv file that can easily later be inputted into a mysql database.
-# Joseph Day -- Rogers Section -- PA 2
+# THE CRAWLER -- Crawls through Miller Center archives
+# of U.S. Presidential Speeches.
+#Joe Day
 
 import re
 import util
@@ -22,8 +20,7 @@ INDEX_IGNORE = set(['a',  'also',  'an',  'and',  'are', 'as',  'at',  'be',
                     'such',  'that',  'the',  'their',  'this',  'through',  'to',
                     'topics',  'units', 'we', 'were', 'which', 'will', 'with', 'yet'])
 
-#starting_url = "https://www.classes.cs.uchicago.edu/archive/2015/winter/12200-1/new.collegecatalog.uchicago.edu/index.html"
-#limiting_domain = "classes.cs.uchicago.edu"
+
 
 starting_url = "http://millercenter.org/president/speeches"
 limiting_domain = "millercenter.org"
