@@ -95,3 +95,4 @@ def crawl(queue=None):
 
     df = pd.DataFrame.from_dict(transcript_dict, orient='index')
     pickle.dump(df, open( "presidential_speeches2.pickle", "wb" ))
+
